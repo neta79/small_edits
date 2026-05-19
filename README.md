@@ -12,6 +12,13 @@ Then it edits by pointing at the tiny handle (`123,ujzi`) rather than restating 
 
 In short: less diff karaoke, more pointing.
 
+## Credits
+
+The original idea comes from [@antirez](https://antirez.com), which 
+[briefly](https://antirez.com/news/166) mentioned the 
+[concept](https://www.youtube.com/watch?v=IoE3Hi2zpwk#t=22m10s)).
+
+
 ## The Pitch
 
 The toolset is a Proof of Concept that has two core operations:
