@@ -7,7 +7,7 @@ designed to enable efficient and robust file editing by language models.
 
 The original idea comes from [@antirez](https://antirez.com), which 
 [briefly](https://antirez.com/news/166) mentioned the 
-[concept](https://www.youtube.com/watch?v=IoE3Hi2zpwk#t=22m10s)).
+[concept](https://www.youtube.com/watch?v=IoE3Hi2zpwk#t=22m10s).
 
 I just expanded on his idea.
 

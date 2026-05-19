@@ -16,7 +16,7 @@ In short: less diff karaoke, more pointing.
 
 The original idea comes from [@antirez](https://antirez.com), which 
 [briefly](https://antirez.com/news/166) mentioned the 
-[concept](https://www.youtube.com/watch?v=IoE3Hi2zpwk#t=22m10s)).
+[concept](https://www.youtube.com/watch?v=IoE3Hi2zpwk#t=22m10s).
 
 
 ## The Pitch
