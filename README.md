@@ -154,18 +154,18 @@ What it **does** mean:
 
 If there's one thing to take away, it's *"LLKPAIII"*, obviously:
 
-`[L]`et the LLM point at lines using tiny anchors like `123,abcd`.
-`[L]`et the harness do the annoying bookkeeping.
-`[K]`eep the shared state sparse but indexed.
-`[P]`refer block replacements over fussy one-line surgery.
-`[A]`nd Always hand back fresh context after each edit. 
-`[I]`f the file drifted, fail cleanly.
-`[I]`f the span was never read, fail honestly.
-`[I]`f everything lines up, apply the edit without making the model recite half the bible like it is being punished for something.
+- `[L]`et the LLM point at lines using tiny anchors like `123,abcd`.
+- `[L]`et the harness do the annoying bookkeeping.
+- `[K]`eep the shared state sparse but indexed.
+- `[P]`refer block replacements over fussy one-line surgery.
+- `[A]`nd Always hand back fresh context after each edit. 
+- `[I]`f the file drifted, fail cleanly.
+- `[I]`f the span was never read, fail honestly.
+- `[I]`f everything lines up, apply the edit without making the model recite half the bible like it is being punished for something.
 
 ## Organic
 
-This project is mostly organic and burned a reduced amount of tokens by using a human.
+This project is *mostly* organic and burned a reduced amount of tokens by using a human.
 
 *More ATPs, less APIs.*
 
