@@ -86,15 +86,57 @@ The shell wrapper is intentionally easygoing:
 - it can target local Ollama-compatible endpoints
 - it prints the LLM/tool dialogue in plain text while running
 
+## .env Setup
+
+The harness will auto-load a root `.env` if it finds one.
+
+For hosted OpenAI, a minimal `.env` looks like this:
+
+```dotenv
+OPENAI_API_KEY=sk-...
+```
+
+For a local OpenAI-compatible endpoint such as Ollama, you usually want the test wrapper variables instead:
+
+```dotenv
+LINEHASH_TEST_MODEL=qwen3:0.6b
+LINEHASH_TEST_BASE_URL=http://127.0.0.1:11434/v1
+LINEHASH_TEST_API_KEY=ollama
+```
+
+Same idea for any other local OpenAI-compatible server: set the model name, set the base URL, and give it whatever dummy API key that server expects.
+
 ## Weak-LLM Status Report
 
 This project was tested not only with stronger hosted models, but also with hilariously small local ones.
 
 What has worked in live harness runs, one vector at a time:
 
-- `gemma4:e2b` completed basic insert/replace flows
+- `gemma4:e2b` completed basic insert/replace flows. It's strong. No problem there.
 - `qwen3:0.6b` completed selected insert, replace, and delete vectors after the harness manifest was simplified
-- brace-wrapped anchors and full-read-line anchor reuse were exercised in the harness vectors
+
+We pushed down to `granite4:350m`, which is is probably the benchmark for the tinyest tool-capable model that can 
+still do something nontrivial. What this taught us:
+
+- it is very easy to overwhelm tiny models with a "helpful" tool manifest
+- abstract placeholders like `{lineno},{chainHash}` are dangerous; the model may literally type `lineno` back at you
+- even when a model understands anchors in principle, it may still:
+  - omit required fields like `path` or `kind`
+  - confuse `kind` with `type`
+  - copy example paths instead of the current file path
+  - stop after `read()` and never perform the `edit()`
+  - misread the returned post-edit window and claim success when it actually inserted instead of replaced
+
+Plausible mitigations we found:
+
+- prefer concrete examples over abstract schema explanations
+- keep the manifest short, repetitive, and literal
+- say what **not** to do in plain language, for example: do not use `beta` as an anchor
+- include one exact example per operation shape you care about
+- tell the model explicitly that example anchors are patterns only, not reusable values
+- reduce optionality where possible; tiny models do worse when a tool supports too many calling conventions
+- if tiny models are a serious target, splitting one polymorphic `edit(...)` tool into several narrower tools is probably worth testing
+- completely opaque handles could probably be used to enforce reference correctness, but at this point it means we are just barking at the wrong LLM.
 
 What this does **not** mean:
 
@@ -108,8 +150,26 @@ What it **does** mean:
 - manifest design is a first-class part of the problem
 - a lean, concrete tool description works much better than a huge "helpful" one
 
-## Current Mood
+## Takeaways
 
-Promising, a bit scrappy, and still very much experimental.
+If there's one thing to take away, it's *"LLKPAIII"*, obviously:
 
-Which is honestly the correct mood for a repo about teaching small models to edit files without eating the furniture.
+`[L]`et the LLM point at lines using tiny anchors like `123,abcd`.
+`[L]`et the harness do the annoying bookkeeping.
+`[K]`eep the shared state sparse but indexed.
+`[P]`refer block replacements over fussy one-line surgery.
+`[A]`nd Always hand back fresh context after each edit. 
+`[I]`f the file drifted, fail cleanly.
+`[I]`f the span was never read, fail honestly.
+`[I]`f everything lines up, apply the edit without making the model recite half the bible like it is being punished for something.
+
+## Organic
+
+This project is mostly organic and burned a reduced amount of tokens by using a human.
+
+*More ATPs, less APIs.*
+
+*Save some tokens.*
+
+*Go green.*
+

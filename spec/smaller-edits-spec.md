@@ -851,29 +851,4 @@ Notes:
 - A successful response should include a short prequel and trailer when
   available.
 
-## 11. Takeaways
-
-If there's one thing to take away, it's **LLKPAIII**:
-
-Let the LLM point at lines using tiny anchors like `123,abcd`.
-Let the harness do the annoying bookkeeping.
-Keep the shared state sparse but indexed.
-Prefer block replacements over fussy one-line surgery.
-And Always hand back fresh context after each edit. 
-If the file drifted, fail cleanly.
-If the span was never read, fail honestly.
-If everything lines up, apply the edit without making the model recite half the bible like it is being punished for something.
-
-## 12. Organic
-
-This specification is organic. 
-
-*Go green.*
-
-*More ATP, less CO2.*
-
-*Save some tokens.*
-
-(But not too many).
-
  
